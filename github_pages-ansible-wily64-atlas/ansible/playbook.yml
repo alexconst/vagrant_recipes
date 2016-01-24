@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Update package listing cache
+      apt: update_cache=yes upgrade=no cache_valid_time=1800
+
+    - name: Install packages required by GitHub Pages
+      apt: pkg={{item}} state=latest install_recommends=no
+      with_items:
+        - htop
+        - ruby-dev
+        - bundler
+        - zlib1g-dev
+        - ruby-execjs
+        - python-pygments
+
+    - name: Install the GitHub Pages Ruby gem
+      gem: name={{item}} state=latest user_install=no
+      with_items:
+        - activesupport
+        - github-pages
+
