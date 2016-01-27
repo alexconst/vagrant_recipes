@@ -19,4 +19,6 @@ Some Vagrant recipes.
     - blank slate environment.
     - uses AWS AMI.
     - includes a Vagrantfile capable of reading AWS credential files. Could be useful until [PR #441](https://github.com/mitchellh/vagrant-aws/pull/441) gets merged.
-
+- **vagrant_dev-wily64-atlas**
+    - development environment suitable for hacking on the vagrant-aws plugin.
+    - uses Vagrant box from Hashicorp Atlas.
