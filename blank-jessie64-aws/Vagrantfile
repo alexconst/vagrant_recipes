@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  # AWS dummy box
+  config.vm.box = "dummy"
+
+  config.vm.provider :aws do |aws, override|
+    # configure your credentials and select your region
+    aws.access_key_id = "YOUR KEY"
+    aws.secret_access_key = "YOUR SECRET KEY"
+    # the token is only needed if you're using one
+    #aws.session_token = "YOUR SESSION TOKEN"
+    aws.region = "YOUR REGION"
+
+    aws.ami = "ami-e31a6594"
+    # this username must exist in the specified aws.ami
+    override.ssh.username = "admin"
+    aws.instance_type = "t2.micro"
+    # if your default SG does not allow for SSH then you need to specify it here
+    #aws.security_groups = ['YOUR SG ALLOWING SSH']
+
+    # set the keypair name that will be used (name as shown in AWS)
+    aws.keypair_name = "KEYPAIR NAME"
+    # the credential file should be the one for the aws.keypair_name
+    override.ssh.private_key_path = ENV['HOME'] + "/.ssh/" + "YOUR PRIVATE KEYFILE"
+  end
+
+  # install htop
+  config.vm.provision "shell", path: "scripts/packages.sh"
+
+end

@@ -1,0 +1,127 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+class Credentials
+  # This module reads AWS config and credentials from environment variables
+  # or, if these are not defined, by reading the corresponding files. So the
+  # behaviour is all-or-nothing (ie: no mixing between vars and files).
+  # It allows choosing a profile (by default it's [default]) and an "info"
+  # directory (by default $HOME/.aws).
+  # Supported information: region, aws_access_key_id, aws_secret_access_key,
+  # and aws_session_token.
+  #
+  # AWS credentials specification:
+  # http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-config-files
+
+  def get_aws_info(profile, location)
+    profile = 'default' if profile.nil?
+    location = ENV['HOME'] + '/.aws/' if location.nil?
+
+    # read from environment variables
+    aws_region, aws_id, aws_secret, aws_token = read_aws_environment()
+    # if nothing there, then read from files
+    if aws_id.to_s == '' or aws_secret.to_s == '' or aws_region.to_s == ''
+      aws_region, aws_id, aws_secret, aws_token = read_aws_files(profile, location)
+    end
+    aws_region = nil if aws_region == ''
+    aws_id     = nil if aws_id == ''
+    aws_secret = nil if aws_secret == ''
+    aws_token  = nil if aws_token == ''
+
+    return aws_region, aws_id, aws_secret, aws_token
+  end
+
+
+  private
+
+  def read_aws_files(profile, location)
+    # file location
+    aws_config = location + 'config'
+    aws_creds = location + 'credentials'
+
+    # profile line to match in .aws/config
+    pat = ''
+    if profile == 'default'
+      pat = '\[default\]'
+    else
+      pat = '\[profile ' + profile + '\]'
+    end
+    # read config file for selected profile
+    begin
+      data = File.read(aws_config)
+      regex = Regexp.new('^' + pat + '$\n^region\s*=\s*(.*)$')
+      aws_region = regex.match(data)[1]
+    rescue
+      aws_region = ''
+    end
+
+    # profile line to match in .aws/credentials
+    pat = '\[' + profile + '\]'
+    # read credentials file for selected profile
+    begin
+      aws_token = ''
+      data = File.read(aws_creds)
+      regex = Regexp.new('^' + pat + '$\n^aws_access_key_id\s*=\s*(.*)$\naws_secret_access_key\s*=\s*(.*)$(\n^aws_session_token\s*=\s*(.*)$)?')
+      matches = regex.match(data)
+      aws_id = matches[1]
+      aws_secret = matches[2]
+      aws_token = matches[4]
+    rescue
+      aws_id = ''
+      aws_secret = ''
+    end
+
+    return aws_region, aws_id, aws_secret, aws_token
+  end
+
+  def read_aws_environment()
+    aws_region = ENV['AWS_DEFAULT_REGION']
+    aws_id = ENV['AWS_ACCESS_KEY_ID']
+    aws_secret = ENV['AWS_SECRET_ACCESS_KEY']
+    aws_token = ENV['AWS_SESSION_TOKEN']
+
+    return aws_region, aws_id, aws_secret, aws_token
+  end
+
+end
+
+
+
+Vagrant.configure(2) do |config|
+  # AWS dummy box
+  config.vm.box = "dummy"
+
+  config.vm.provider :aws do |aws, override|
+    # read AWS credentials from environment variables if set, otherwise read from files
+    aws_dir = ENV['HOME'] + "/.aws/"
+    aws_profile = "default"
+    region, access_key_id, secret_access_key, session_token = Credentials.new.get_aws_info(aws_profile, aws_dir)
+
+
+
+    # configure your credentials and select your region
+    aws.access_key_id = access_key_id
+    aws.secret_access_key = secret_access_key
+    # the token is only needed if you're using one
+    #aws.session_token = session_token
+    aws.region = region
+
+    aws.ami = "ami-e31a6594"
+    # this username must exist in the specified aws.ami
+    override.ssh.username = "admin"
+    aws.instance_type = "t2.micro"
+    # if your default SG does not allow for SSH then you need to specify it here
+    #aws.security_groups = ['YOUR SG ALLOWING SSH']
+
+    # set the keypair name that will be used (name as shown in AWS)
+    aws.keypair_name = "KEYPAIR NAME"
+    # the credential file should be the one for the aws.keypair_name
+    override.ssh.private_key_path = ENV['HOME'] + "/.ssh/" + "YOUR PRIVATE KEYFILE"
+  end
+
+  # install htop
+  config.vm.provision "shell", path: "scripts/packages.sh"
+
+end
+

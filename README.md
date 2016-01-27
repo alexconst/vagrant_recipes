@@ -12,7 +12,11 @@ Some Vagrant recipes.
     - Blog in a box! Installs GitHub Pages gem with its specific Jekyll version.
     - uses Vagrant box from Hashicorp Atlas.
 - **github_pages-ansible-wily64-atlas**:
-    - Blog in a box! Installs GitHub Pages gem with its specific Jekyll version.
+    - blog in a box! Installs GitHub Pages gem with its specific Jekyll version.
     - uses Vagrant box from Hashicorp Atlas.
     - uses Ansible for provisioning.
+- **blank-jessie64-aws**
+    - blank slate environment.
+    - uses AWS AMI.
+    - includes a Vagrantfile capable of reading AWS credential files. Could be useful until [PR #441](https://github.com/mitchellh/vagrant-aws/pull/441) gets merged.
 
