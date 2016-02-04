@@ -62,4 +62,11 @@ bundle exec vagrant ssh
 bundle exec vagrant destroy -f
 ```
 
+To add/update tests edit `spec/vagrant-aws/config_spec.rb`.
+
+To run the tests:
+```bash
+bundle
+bundle exec rake
+```
 
