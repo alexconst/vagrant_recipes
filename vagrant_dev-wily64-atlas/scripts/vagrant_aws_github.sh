@@ -4,7 +4,7 @@ apt-get update
 # install htop because we can
 apt-get install -y htop
 # make sure we have dependencies
-apt-get install -y ruby-dev bundler bsdtar
+apt-get install -y ruby-dev bundler bsdtar zlib1g-dev
 apt-get clean
 
 # install Vagrant (not required since the vagrant gem from github will be installed)
