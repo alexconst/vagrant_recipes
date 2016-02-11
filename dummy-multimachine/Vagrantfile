@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  # fix annoyance, http://foo-o-rama.com/vagrant--stdin-is-not-a-tty--fix.html
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+    s.privileged = false
+    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
+  end
+  # fix annoyance, http://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
+  config.vm.provision "shell", inline: "echo 'export DEBIAN_FRONTEND=noninteractive' >> /root/.profile"
+  config.vm.provision "shell", inline: "for user in /home/*; do echo 'export DEBIAN_FRONTEND=noninteractive' >> $user/.profile; done"
+
+  # Choose a box
+  config.vm.box = "ubuntu/wily64"
+
+  # Fine tune the virtualbox VM
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [
+      "modifyvm", :id,
+      "--cpus", "2",
+      "--cpuexecutioncap", "50",
+      "--memory", "384",
+    ]
+  end
+
+  # Common provisioning
+  config.vm.provision :shell, inline: 'echo "Hello World"'
+
+  # web servers
+  (1..2).each do |i|
+    config.vm.define "web#{i}" do |node|
+      node.vm.hostname = "web#{i}"
+      node.vm.network :private_network, ip: "192.168.33.5#{i}"
+      node.vm.network "forwarded_port", guest: 80, host: "808#{i}"
+      # web server specific provisioning
+      node.vm.provision :shell, inline: 'echo "Web server reporting for duty."'
+    end
+  end
+
+  # db server
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db"
+    db.vm.network :private_network, ip: "192.168.33.40"
+    db.vm.network "forwarded_port", guest: 5432, host: "54322"
+    # db server specific provisioning
+    db.vm.provision :shell, inline: 'echo "DB server ready to store and serve."'
+  end
+
+end
+
