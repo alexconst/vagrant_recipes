@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  # select our box
+  config.vm.box = "alexconst/debian/jessie64/20160115.0.3"
+
+  # set credentials (only required if Vagrant's insecure keypair wasn't added during box creation)
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  # set hostname
+  config.vm.hostname = "devbox"
+
+  # set text to be shown after 'vagrant up'
+  # this text can be useful for detailing instructions how to access the development environment
+  #config.vm.post_up_message = "A Vagrant tutorial can be found at http://alexconst.github.io/"
+
+  # add additional shared folder
+  host_folder = ENV['HOME'] + "/home/downloads/share_vagrant"
+  guest_folder = "/shared"
+  config.vm.synced_folder host_folder, guest_folder
+
+  # configure the network: set up port forwarding for TCP
+  # accessing port 8080 on the host will be forwarded to port 80 on the guest
+  #config.vm.network "forwarded_port", host: 8080, guest: 80
+
+  # configure the network: set up port forwarding for both UDP and TCP
+  #config.vm.network "forwarded_port", host: 12003, guest: 2003, protocol: "tcp"
+  #config.vm.network "forwarded_port", host: 12003, guest: 2003, protocol: "udp"
+
+  # provision done by uploading a script and executing it (path can be an URL)
+  config.vm.provision "shell", path: "scripts/base.sh"
+
+end

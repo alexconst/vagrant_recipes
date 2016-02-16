@@ -5,9 +5,13 @@ Some Vagrant recipes.
 - **blank-trusty64-atlas**:
     - blank slate environment.
     - uses Vagrant box from Hashicorp Atlas.
+- **blank-jessie64-own**:
+    - blank state environment.
+    - installs some survival packages: htop, aptitude, vim, git
+    - uses custom made box created using Packer.
 - **dummy-jessie64-own**:
-    - dummy environment.
-    - custom made box created using Packer.
+    - dummy environment used in tutorial.
+    - uses custom made box created using Packer.
 - **github_pages-wily64-atlas**:
     - Blog in a box! Installs GitHub Pages gem with its specific Jekyll version.
     - uses Vagrant box from Hashicorp Atlas.
