@@ -1,0 +1,12 @@
+#!/bin/sh
+
+URL="http://alexconst.github.io/"
+
+printf "\n\n\
+Blog in a box!\n\
+GitHub Pages (Jekyll powered) compatible environment.\n\
+Simply cd to the blog directory and type:\n\
+    pkill jekyll ; jekyll build  && jekyll serve\n\
+A Vagrant tutorial can be found at:\n
+    %s\n\n" "$URL"
+
