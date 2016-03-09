@@ -11,6 +11,7 @@ apt-get install -y python-pygments
 # would otherwise be done by the github-pages gem.
 # https://github.com/github/pages-gem/issues/181
 gem install activesupport
-gem install github-pages
+# install GHP gem version which depends on Jekyll 2.x
+gem install github-pages -v43
 apt-get clean
 

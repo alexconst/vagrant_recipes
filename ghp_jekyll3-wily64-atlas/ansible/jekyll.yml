@@ -21,17 +21,27 @@
       apt: pkg={{item}} state=latest install_recommends=no
       with_items:
         - htop
-        - ruby-dev
+        - ruby2.2
+        - ruby2.2-dev
         - bundler
         - zlib1g-dev
         - ruby-execjs
-        - python-pygments
+
+    - name: Set Ruby 2.2.x to default
+      file: src=/usr/bin/ruby2.2 dest=/usr/bin/ruby state=link
 
     - name: Install the GitHub Pages Ruby gem
       # use the Ansible gem module to:
       # install the listed Ruby gems to the latest available version for all users
       gem: name={{item}} state=latest user_install=no
       with_items:
+        # There is a bug which forces us to explicitly install activesupport, which 
+        # would otherwise be done by the github-pages gem.
+        # https://github.com/github/pages-gem/issues/181
         - activesupport
         - github-pages
+
+    - name: Copy motd
+      copy: src=files/42-jekyll dest=/etc/update-motd.d/42-jekyll mode=755
+
 

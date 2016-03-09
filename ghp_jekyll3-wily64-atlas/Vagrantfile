@@ -11,12 +11,7 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "jekyll"
 
   # Message shown on vagrant up
-  config.vm.post_up_message = "
-Blog in a box! GitHub Pages (Jekyll powered) compatible environment.
-Simply cd to the blog directory and type:
-    pkill jekyll ; jekyll build  && jekyll serve
-
-A Vagrant tutorial can be found at http://alexconst.github.io/"
+  config.vm.post_up_message = "Blog in a box!"
 
 
   # Make the guest accessible to the host
@@ -47,6 +42,7 @@ A Vagrant tutorial can be found at http://alexconst.github.io/"
     ]
   end
 
+
   # fix annoyance, http://foo-o-rama.com/vagrant--stdin-is-not-a-tty--fix.html
   config.vm.provision "fix-no-tty", type: "shell" do |s|
     s.privileged = false
@@ -59,7 +55,7 @@ A Vagrant tutorial can be found at http://alexconst.github.io/"
 
   # provisioning using Ansible
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "ansible/playbook.yml"
+    ansible.playbook = "ansible/jekyll.yml"
   end
 
 end
