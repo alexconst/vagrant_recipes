@@ -26,6 +26,8 @@
         - bundler
         - zlib1g-dev
         - ruby-execjs
+      # needed by github-pages health-check:
+        - libcurl3
 
     - name: Set Ruby 2.2.x to default
       file: src=/usr/bin/ruby2.2 dest=/usr/bin/ruby state=link
