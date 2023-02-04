@@ -1,6 +1,11 @@
 # About
 
-Some Vagrant recipes.
+## Naming convention
+Format: purpose-OS-vendor
+Example: blank-debian11-local => minimal / bare bones install, debian 11, locally build using Packer (previous boxes use the word "own" instead of "local")
+Example: blank-jessie64-aws => minimal / bare bones install, debian jessie, AWS image
+
+## Vagrant recipes
 
 - **blank-trusty64-atlas**:
     - blank slate environment.
@@ -26,3 +31,66 @@ Some Vagrant recipes.
 - **vagrant_dev-wily64-atlas**
     - development environment suitable for hacking on the vagrant-aws plugin.
     - uses Vagrant box from Hashicorp Atlas.
+
+
+# How To
+
+## create VM
+```bash
+# deploy the VM the first time:
+vagrant up
+
+# connect to the VM
+vagrant ssh
+
+# reload settings from Vagrantfile
+# (it shuts down the VM, spins it back up, but doesn't do the provisioning unless you force them with the --provision flag)
+vagrant reload
+
+# get status of VM (if created, stopped, suspended, etc)
+vagrant status
+```
+
+## stop/start and suspend/resume VM
+```bash
+# power off the VM
+vagrant halt
+# power on the VM
+vagrant up
+
+# suspend/sleep the VM
+vagrant suspend
+# resume VM
+vagrant resume
+```
+
+## remove VM
+```bash
+# get the state of all active Vagrant environments
+vagrant global-status --prune
+
+# destroy all resources that were created during the machine creation process
+vagrant destroy $vm
+```
+
+
+## add a box to the pool
+```bash
+vagrant box add "${boxfile}" --name "${boxname}"
+vagrant box list
+```
+
+## remove a box from the pool
+```bash
+# to check the status of all your vagrant machines
+vagrant global-status --prune
+
+# delete box
+vagrant box list
+vagrant box remove $box
+# for libvirt boxes/images you also have to:
+virsh vol-list --pool default
+rm $image_file
+ls -la /var/lib/libvirt/images/
+```
+
