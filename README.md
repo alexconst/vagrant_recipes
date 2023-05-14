@@ -33,15 +33,12 @@ Example: blank-jessie64-aws => minimal / bare bones install, debian jessie, AWS 
     - uses Vagrant box from Hashicorp Atlas.
 
 
-# How To
+# How To VM lifecycle
 
 ## create VM
 ```bash
 # deploy the VM the first time:
 vagrant up
-
-# connect to the VM
-vagrant ssh
 
 # reload settings from Vagrantfile
 # (it shuts down the VM, spins it back up, but doesn't do the provisioning unless you force them with the --provision flag)
@@ -50,6 +47,17 @@ vagrant reload
 # get status of VM (if created, stopped, suspended, etc)
 vagrant status
 ```
+
+## connect to VM
+```bash
+# connect to the VM
+vagrant ssh
+
+# connect over VNC
+vinagre 127.0.0.1:5900
+xtigervncviewer 127.0.0.1:5900
+```
+
 
 ## stop/start and suspend/resume VM
 ```bash
@@ -64,7 +72,7 @@ vagrant suspend
 vagrant resume
 ```
 
-## remove VM
+## delete VM
 ```bash
 # get the state of all active Vagrant environments
 vagrant global-status --prune
@@ -73,6 +81,8 @@ vagrant global-status --prune
 vagrant destroy $vm
 ```
 
+
+# How To box lifecycle
 
 ## add a box to the pool
 ```bash
