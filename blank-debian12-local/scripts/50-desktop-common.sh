@@ -32,7 +32,8 @@ install_package fonts-noto-cjk fonts-noto-cjk-extra fonts-noto-color-emoji
 install_font_awesome
 install_font_nerd
 install_package firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
-install_package vlc ffmpeg feh sxiv
+install_package ffmpeg feh sxiv
+install_package mpv smplayer smplayer-themes # vlc
 install_package ntfs-3g p7zip-full rar unrar zstd rsync
 
 # vpn

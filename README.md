@@ -33,7 +33,13 @@ Example: blank-jessie64-aws => minimal / bare bones install, debian jessie, AWS 
     - uses Vagrant box from Hashicorp Atlas.
 
 
-# How To VM lifecycle
+# How To: VM lifecycle
+
+## vagrant env setup
+If you (need to) have `.vagrant.d` in a non-standard location:
+```bash
+export VAGRANT_HOME=/path/to/your/.vagrant.d
+```
 
 ## create VM
 ```bash
@@ -50,12 +56,17 @@ vagrant status
 
 ## connect to VM
 ```bash
-# connect to the VM
+# connect using SSH
 vagrant ssh
 
-# connect over VNC
+# connect using SPICE
+vinagre spice://127.0.0.1:5900 2> /dev/null
+remmina -c spice://127.0.0.1:5900
+
+# connect using VNC - DEPRECATED
 vinagre 127.0.0.1:5900
 xtigervncviewer 127.0.0.1:5900
+remmina -c vnc://127.0.0.1:5900
 ```
 
 
@@ -82,7 +93,7 @@ vagrant destroy $vm
 ```
 
 
-# How To box lifecycle
+# How To: box lifecycle
 
 ## add a box to the pool
 ```bash
