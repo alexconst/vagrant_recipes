@@ -65,6 +65,7 @@ remmina -c spice://127.0.0.1:5900
 
 # connect using VNC - DEPRECATED
 vinagre 127.0.0.1:5900
+vinagre vnc://127.0.0.1:5900 2> /dev/null
 xtigervncviewer 127.0.0.1:5900
 remmina -c vnc://127.0.0.1:5900
 ```

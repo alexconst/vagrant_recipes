@@ -16,23 +16,22 @@ Vagrant.configure(2) do |config|
     libvirt.memory = 1024
     libvirt.cpus = 2
 
+    libvirt.sound_type = "ich6"
+
+    #libvirt.graphics_port = 5900 # bad idea because it may collide with other existing vms
+    libvirt.graphics_autoport = 'yes'
     # SLOW
     #libvirt.graphics_type = "vnc"
-
+    #libvirt.video_type = "virtio"
+    #libvirt.video_accel3d = true
+    #libvirt.graphics_gl = true
     # FAST
     libvirt.graphics_type = "spice"
-    libvirt.video_type = "qxl" # a lot faster than virtio
-    libvirt.channel :type  => 'spicevmc', :target_name => 'com.redhat.spice.0',     :target_type => 'virtio' # ignored?
-    libvirt.channel :type  => 'unix',     :target_name => 'org.qemu.guest_agent.0', :target_type => 'virtio' # ignored?
-    libvirt.random  :model => 'random' # ignored?
-    libvirt.sound_type = "ich6" # ignored?
+    libvirt.video_type = "qxl"
 
-    # NOTE: these are not supported by libvirt plugin:
-    #libvirt.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda']
-    #libvirt.sound_model = "ich6"
-    # NOTE: these are currently not working, getting an error: Libvirt failed to fully update the domain with the specified XML
-    #libvirt.graphics_gl = true
-    #libvirt.video_accel3d = true
+    libvirt.channel :type  => 'spicevmc', :target_name => 'com.redhat.spice.0',     :target_type => 'virtio' # copy-paste between guest and host
+    libvirt.channel :type  => 'unix',     :target_name => 'org.qemu.guest_agent.0', :target_type => 'virtio' # qemu agent
+    libvirt.random  :model => 'random' # passthrough /dev/random to your VM
   end
 
   # set credentials (only required if Vagrant's insecure keypair wasn't added during box creation)

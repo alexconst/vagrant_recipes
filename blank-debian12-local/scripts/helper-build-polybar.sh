@@ -5,7 +5,7 @@ polybar="polybar-$version"
 
 
 function install_deps() {
-    apt-get install -y --no-install-recommends cmake pkg-config libuv1-dev libcairo2-dev 
+    apt-get install -y --no-install-recommends g++ cmake pkg-config libuv1-dev libcairo2-dev python3-sphinx
     apt-get install -y --no-install-recommends xcb-proto python3-xcbgen libxcb1-dev libxcb-util-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev  libxcb-ewmh-dev libxcb-icccm4-dev 
     apt-get install -y --no-install-recommends libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libpulse-dev libasound2-dev libjsoncpp-dev libcurl4-openssl-dev libnl-genl-3-dev
 }
@@ -17,7 +17,7 @@ function get_src() {
 
 function build() {
     cd $polybar
-    mkdir build
+    mkdir -p build
     cd build
     cmake ..
     make -j$(nproc)
@@ -33,7 +33,7 @@ function install() {
 
 
 if [[ $# -eq 0 ]]; then
-    echo "ABOUT: helper script to build polybar from source"
+    echo "ABOUT: helper script to build polybar from source. It downloads the source to current folder and builds it there."
     echo "USAGE: $0 COMMAND"
     echo "List of commands:"
     cat "$0" | grep '^function' | sed 's#function #    #g ; s#().*{##g'
