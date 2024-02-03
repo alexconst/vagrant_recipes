@@ -43,8 +43,9 @@ function install_goodies_xfce {
 function install_goodies_hardware {
     install_package xfce4-power-manager xfce4-power-manager-plugins # for `xfce4-power-manager`
     install_package blueman # for `blueman-applet`
-    install_package redshift geoclue-2.0 # redshift-gtk # the gtk tray is convenient but is also bloated at 50 MB of RAM
+    install_package redshift geoclue-2.0 # redshift-gtk # the gtk tray is convenient but is also bloated at 50 MB of RAM. An alternative to `redshift` is `xsct`
 }
+# NOTE: maybe move redshift/xsct to desktop-common?
 
 function install_goodies_display {
     # could potentially comment out this one since I can either run xrandr manually or use the autostart file:

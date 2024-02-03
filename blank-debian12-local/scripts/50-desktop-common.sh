@@ -25,13 +25,14 @@ function install_font_nerd {
 }
 
 install_package x11-utils x11-xserver-utils
+install_package mesa-utils # for glxinfo, glxgears
 install_package dbus-user-session dbus-x11
 install_package usb.ids
 install_package fontconfig xfonts-base fonts-dejavu fonts-lmodern fonts-stix
 install_package fonts-noto-cjk fonts-noto-cjk-extra fonts-noto-color-emoji
 install_font_awesome
 install_font_nerd
-install_package firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
+install_package gvim firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
 install_package ffmpeg feh sxiv
 install_package mpv smplayer smplayer-themes # vlc
 install_package ntfs-3g p7zip-full rar unrar zstd rsync
@@ -44,6 +45,8 @@ install_package rxvt-unicode
 install_package xterm xtermcontrol xtermset
 
 # other goodies
-install_package xcwd    # useful for launching applications directly into the same directory as the focused application
+## xcwd: useful for launching applications directly into the same directory as the focused application
+## xsel: for clipboard access between the cli and X
+install_package xcwd xsel
 
 
