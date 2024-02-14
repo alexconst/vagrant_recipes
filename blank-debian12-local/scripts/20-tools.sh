@@ -12,8 +12,12 @@ function install_zsh {
     # install_package zsh-syntax-highlighting
     git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting
     cd zsh-syntax-highlighting
-    make install
+    PREFIX=/usr make install
     cd ..
+    # install ZSH_HIGHLIGHT_STYLES highlight settings that work with solarized theme
+    src="https://raw.githubusercontent.com/dracula/zsh-syntax-highlighting/master/zsh-syntax-highlighting.sh"
+    dst="/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting_colorscheme-dracula.zsh"
+    curl "$src" > "$dst"
     # install_package zsh-autosuggestions
     git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions
     cd zsh-autosuggestions

@@ -57,7 +57,7 @@ function install_goodies_display {
 
 install_package xserver-xorg xinit
 install_package xfonts-100dpi xfonts-75dpi xfonts-scalable
-install_package i3 i3lock i3status dex dunst suckless-tools dwm rofi xdotool xdo wmctrl
+install_package i3 i3lock i3status dex dunst suckless-tools dwm rofi xdotool xdo wmctrl xautolock libnotify-bin
 
 install_sessionmanager
 #install_i3_blocks          # deprecated in favor of polybar
