@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
   # you can change these and reboot the vm with `vagrant reload`
   # for info on the available options to the libvirt provisioner check https://vagrant-libvirt.github.io/vagrant-libvirt/configuration.html
   config.vm.provider :libvirt do |libvirt|
-    libvirt.memory = 1024
+    #libvirt.memory = 1280
+    libvirt.memory = 2048
     libvirt.cpus = 2
 
     libvirt.sound_type = "ich6"
@@ -21,10 +22,10 @@ Vagrant.configure(2) do |config|
     #libvirt.graphics_port = 5900 # bad idea because it may collide with other existing vms
     libvirt.graphics_autoport = 'yes'
     # SLOW
-    #libvirt.graphics_type = "vnc"
+    #libvirt.graphics_type = "spice" # vnc also works but is slower
     #libvirt.video_type = "virtio"
-    #libvirt.video_accel3d = true
-    #libvirt.graphics_gl = true
+    #libvirt.video_accel3d = true # ATM not working with spice, only vnc
+    #libvirt.graphics_gl = true # ATM not working in vagrant (maybe it's an host issue); libvirt says it only works with spice not vnc
     # FAST
     libvirt.graphics_type = "spice"
     libvirt.video_type = "qxl"
@@ -63,6 +64,7 @@ Vagrant.configure(2) do |config|
   #config.vm.network "forwarded_port", host: 12003, guest: 2003, protocol: "udp"
 
   # provision done by uploading a script and executing it (path can be an URL)
+  #config.vm.provision :shell, :path => "bootstrap.sh", :args => "'first arg' second"
   config.vm.provision "shell", path: "scripts/10-base.sh"
 
 end
