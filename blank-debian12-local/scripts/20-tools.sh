@@ -26,7 +26,9 @@ function install_zsh {
     install -c -d /usr/share/zsh-autosuggestions
     cp zsh-autosuggestions.zsh /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     cd ..
-    # install_package zsh-theme-powerlevel9k # powerlevel9k is now legacy and 10k is not on debian
+    # install powerlevel10k for zsh (it replaces the legacy powerlevel9k)
+    # the recommended font is Meslo Nerd Font patched for Powerlevel10k
+    # to check for glyphs see https://www.nerdfonts.com/cheat-sheet
     mkdir -p /usr/local/share/fonts/MesloNF
     pushd .
     cd /usr/local/share/fonts/MesloNF
@@ -57,6 +59,7 @@ install_package file lsof bzip2 xz-utils dnsutils whois net-tools tcpdump
 
 # shell
 install_package coreutils make git # required to pull and install latest zsh and tmux addons
+#install_package git-lfs # installing with homebrew a newer version due to a potential bug in Debian's version
 install_zsh
-install_tmux
+#install_tmux # skipping here because we want the latest which is not available in Bookworm, so we install with brew
 

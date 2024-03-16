@@ -28,7 +28,7 @@ install_package x11-utils x11-xserver-utils xclip
 install_package mesa-utils # for glxinfo, glxgears
 install_package dbus-user-session dbus-x11
 install_package usb.ids
-install_package fontconfig xfonts-base fonts-dejavu fonts-lmodern fonts-stix
+install_package fontconfig xfonts-base fonts-dejavu fonts-dejavu-core fonts-dejavu-extra fonts-lmodern fonts-stix
 install_package fonts-noto-cjk fonts-noto-cjk-extra fonts-noto-color-emoji
 install_font_awesome
 install_font_nerd
@@ -36,6 +36,7 @@ install_package gvim-gtk3 firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
 install_package ffmpeg feh sxiv
 install_package mpv smplayer smplayer-themes # vlc
 install_package ntfs-3g p7zip-full rar unrar zstd rsync gpg
+
 
 # vpn
 install_package wireguard openresolv

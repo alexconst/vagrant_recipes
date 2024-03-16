@@ -37,6 +37,7 @@ if [[ $# -eq 0 ]]; then
     echo "USAGE: $0 COMMAND"
     echo "List of commands:"
     cat "$0" | grep '^function' | sed 's#function #    #g ; s#().*{##g'
+    echo "TIP: use 'all' to do all steps; it will use user with uid 1000 for some steps. NOTE: untested"
     exit
 fi
 
@@ -54,6 +55,11 @@ elif [[ "$command" == "get_src" ]] || [[ "$command" == "build" ]]; then
     else
         eval $command
     fi
+elif [[ "$command" == "all" ]]; then
+    install_deps
+    runuser -l $(id -un 1000) -c "cd /tmp ; $0 get_src"
+    runuser -l $(id -un 1000) -c "cd /tmp ; $0 build"
+    install
 else
     echo "ERROR: invalid command; $command"
 fi

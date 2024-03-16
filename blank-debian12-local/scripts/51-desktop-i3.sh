@@ -31,6 +31,7 @@ function install_goodies {
     install_package orage sox # for `orage` calendar app (more powerful than `gsimplecal`)
     install_package network-manager-gnome # for `nm-applet`; for a Qt alternative install the `nm-tray` package instead
     install_package jgmenu jgmenu-xfce4-panel-applet # util for standard and custom X11 menus (eg: right click on desktop)
+    install_package xfce4-screenshooter # screenshots
 }
 
 function install_goodies_xfce {
@@ -57,7 +58,7 @@ function install_goodies_display {
 
 install_package xserver-xorg xinit
 install_package xfonts-100dpi xfonts-75dpi xfonts-scalable
-install_package i3 i3lock i3status dex dunst suckless-tools dwm rofi xdotool xdo wmctrl xautolock libnotify-bin
+install_package i3 i3lock xss-lock i3status dex dunst suckless-tools dwm rofi xdotool xdo wmctrl xautolock libnotify-bin
 
 install_sessionmanager
 #install_i3_blocks          # deprecated in favor of polybar
