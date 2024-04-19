@@ -1,21 +1,10 @@
 #!/bin/bash -eux
 
+
+folder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${folder}/common.sh"
+
 # search for package availability in: https://formulae.brew.sh/formula/
-
-
-#BREW='/home/linuxbrew/.linuxbrew/bin/brew shellenv ; brew'
-
-function install_package {
-    apt-get install -y --no-install-recommends "$@"
-    #echo "$@"
-}
-
-function install_package_using_brew {
-    for item in "$@"; do
-        # NOTE: for some strange reason $@ was being truncated at the first word, not even an echo $@ would work within the runuser scope
-        runuser -l $(id -nu  1000) -c "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\" && brew install $item"
-    done
-}
 
 function install_tmux {
     install_package_using_brew tmux

@@ -1,9 +1,8 @@
 #!/bin/bash -eux
 
-function install_package {
-    apt-get install -y --no-install-recommends "$@"
-    #echo "$@"
-}
+folder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${folder}/common.sh"
+
 
 function install_sessionmanager {
     install_package lightdm lightdm-settings desktop-base

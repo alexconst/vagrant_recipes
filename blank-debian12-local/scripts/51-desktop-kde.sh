@@ -1,9 +1,7 @@
 #!/bin/bash -eux
 
-function install_package {
-    apt-get install -y --no-install-recommends "$@"
-    #echo "$@"
-}
+folder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${folder}/common.sh"
 
 
 install_package xorg xserver-xorg desktop-base kde-plasma-desktop plasma-nm systemsettings kscreen kde-config-screenlocker kwin-x11 kmix libkf5dbusaddons-bin kio-extras qml-module-org-kde-newstuff
