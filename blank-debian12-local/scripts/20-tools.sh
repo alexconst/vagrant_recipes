@@ -51,6 +51,7 @@ function install_tmux {
 install_package iputils-ping dnsutils wget ca-certificates curl
 
 # utils
+install_package lsb-release avahi-daemon libnss-mdns
 install_package bc jq ncdu gpm man-db stow
 
 # useful tools include in the debian "standard system utilities" task package without the useless stuff

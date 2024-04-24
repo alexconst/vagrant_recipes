@@ -58,6 +58,7 @@ vagrant status
 ```bash
 # connect using SSH
 vagrant ssh
+vagrant ssh -c 'sudo bash'
 
 # connect using SPICE
 vinagre spice://127.0.0.1:5900 2> /dev/null
@@ -115,4 +116,25 @@ virsh vol-list --pool default
 rm $image_file
 ls -la /var/lib/libvirt/images/
 ```
+
+
+
+
+# Troubleshooting
+
+## no spice nor vnc connection
+Vagrant is bugged and is not populating the libvirt xml properly. To fix it:
+```bash
+vagrant halt
+
+virsh list --all
+virsh edit blank-debian12-local_default
+```
+Then edit the graphics section to have:
+```xml
+<graphics type='spice' keymap='en-us' autoport='yes'>
+    <listen type='address' address='127.0.0.1'/>
+</graphics>
+```
+
 

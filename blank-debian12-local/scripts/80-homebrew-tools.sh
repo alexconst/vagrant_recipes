@@ -24,6 +24,9 @@ install_package_using_brew neovim
 install_package_using_brew node fish lazygit luarocks virtualenv
 
 # other packages
+#dpkg -r tmux
+apt-get remove -y tmux
 install_tmux
+# note: not removing system git because is still useful for other users (while homebrew git is only available for main user)
 install_package_using_brew git-lfs # seems like there is a bug impacting soft-serve which was only fixed in v3.4.1, see https://github.com/charmbracelet/soft-serve/issues/385
 

@@ -1,3 +1,4 @@
+set -e # need to set here otherwise scripts using these functions won't abort execution on error
 
 function install_package {
     apt-get install -y --no-install-recommends "$@"

@@ -19,8 +19,6 @@ Vagrant.configure(2) do |config|
 
     libvirt.sound_type = "ich6"
 
-    #libvirt.graphics_port = 5900 # bad idea because it may collide with other existing vms
-    libvirt.graphics_autoport = 'yes'
     # SLOW
     #libvirt.graphics_type = "spice" # vnc also works but is slower
     #libvirt.video_type = "virtio"
@@ -29,6 +27,10 @@ Vagrant.configure(2) do |config|
     # FAST
     libvirt.graphics_type = "spice"
     libvirt.video_type = "qxl"
+
+    #libvirt.graphics_port = 5900 # bad idea because it may collide with other existing vms
+    libvirt.graphics_autoport = 'yes'
+    #libvirt.graphics_ip = '127.0.0.1'
 
     libvirt.channel :type  => 'spicevmc', :target_name => 'com.redhat.spice.0',     :target_type => 'virtio' # copy-paste between guest and host
     libvirt.channel :type  => 'unix',     :target_name => 'org.qemu.guest_agent.0', :target_type => 'virtio' # qemu agent
@@ -66,5 +68,7 @@ Vagrant.configure(2) do |config|
   # provision done by uploading a script and executing it (path can be an URL)
   #config.vm.provision :shell, :path => "bootstrap.sh", :args => "'first arg' second"
   config.vm.provision "shell", path: "scripts/10-base.sh"
+  config.vm.provision "shell", path: "scripts/11-update.sh"
+  config.vm.provision "shell", path: "scripts/20-tools.sh"
 
 end

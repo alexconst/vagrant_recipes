@@ -1,9 +1,8 @@
 #!/bin/bash -eux
 
-function install_package {
-    apt-get install -y --no-install-recommends "$@"
-    #echo "$@"
-}
+folder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${folder}/common.sh"
+
 
 install_package git python3-pip python3-dev python3-venv
 # pipenv python3-virtualenv

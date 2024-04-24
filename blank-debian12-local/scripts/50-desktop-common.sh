@@ -31,7 +31,7 @@ install_package fontconfig xfonts-base fonts-dejavu fonts-dejavu-core fonts-deja
 install_package fonts-noto-cjk fonts-noto-cjk-extra fonts-noto-color-emoji
 install_font_awesome
 install_font_nerd
-install_package gvim-gtk3 firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
+install_package vim-gtk3 firefox-esr libgd3 pulseaudio pavucontrol alsa-utils
 install_package ffmpeg feh sxiv
 install_package mpv smplayer smplayer-themes # vlc
 install_package ntfs-3g p7zip-full rar unrar zstd rsync gpg

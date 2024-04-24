@@ -4,6 +4,10 @@ version="3.7.1"
 polybar="polybar-$version"
 
 
+folder="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+app="$folder/$(basename $0)"
+
+
 function install_deps() {
     apt-get install -y --no-install-recommends g++ cmake pkg-config libuv1-dev libcairo2-dev python3-sphinx
     apt-get install -y --no-install-recommends xcb-proto python3-xcbgen libxcb1-dev libxcb-util-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev  libxcb-ewmh-dev libxcb-icccm4-dev 
@@ -25,7 +29,9 @@ function build() {
 
 function install() {
     apt-get remove -y polybar # remove any previous version first
-    cd $polybar/build
+    apt-get install --no-install-recommends libmpdclient2
+    apt-mark manual libmpdclient2 # ensure we don't remove this polybar dependency (but I'm not 100% sure that removing it would actually break anything)
+    cd /tmp/$polybar/build
     make install
 }
 
@@ -57,8 +63,8 @@ elif [[ "$command" == "get_src" ]] || [[ "$command" == "build" ]]; then
     fi
 elif [[ "$command" == "all" ]]; then
     install_deps
-    runuser -l $(id -un 1000) -c "cd /tmp ; $0 get_src"
-    runuser -l $(id -un 1000) -c "cd /tmp ; $0 build"
+    runuser -l $(id -un 1000) -c "cd /tmp ; $app get_src"
+    runuser -l $(id -un 1000) -c "cd /tmp ; $app build"
     install
 else
     echo "ERROR: invalid command; $command"
